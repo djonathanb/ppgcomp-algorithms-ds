@@ -19,6 +19,26 @@ func TestHeapCreation(t *testing.T) {
 	}
 }
 
+func TestMax(t *testing.T) {
+	h := New(10)
+	h.Insert(16)
+	h.Insert(14)
+	h.Insert(10)
+
+	if h.Max() != 16 {
+		t.Errorf("%v different from %v", h.Max(), 16)
+	}
+
+	h = New(10)
+	h.Insert(1)
+	h.Insert(2)
+	h.Insert(3)
+
+	if h.Max() != 3 {
+		t.Errorf("%v different from %v", h.Max(), 3)
+	}
+}
+
 func TestParent(t *testing.T) {
 	h := New(10)
 	parentTest(h, 1, 0, t)
@@ -36,6 +56,37 @@ func parentTest(h Heap, index int, expected int, t *testing.T) {
 	p := h.Parent(index)
 	if p != expected {
 		t.Errorf("parent (%d) different from (%d)", p, expected)
+	}
+}
+
+func TestLeft(t *testing.T) {
+	h := New(10)
+	leftTest(h, 0, 1, t)
+	leftTest(h, 1, 3, t)
+	leftTest(h, 2, 5, t)
+	leftTest(h, 3, 7, t)
+	leftTest(h, 4, 9, t)
+}
+
+func leftTest(h Heap, index int, expected int, t *testing.T) {
+	l := h.Left(index)
+	if l != expected {
+		t.Errorf("left (%d) different from (%d)", l, expected)
+	}
+}
+
+func TestRight(t *testing.T) {
+	h := New(10)
+	rightTest(h, 0, 2, t)
+	rightTest(h, 1, 4, t)
+	rightTest(h, 2, 6, t)
+	rightTest(h, 3, 8, t)
+}
+
+func rightTest(h Heap, index int, expected int, t *testing.T) {
+	r := h.Right(index)
+	if r != expected {
+		t.Errorf("right (%d) different from (%d)", r, expected)
 	}
 }
 
