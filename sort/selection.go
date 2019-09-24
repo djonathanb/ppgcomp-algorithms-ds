@@ -1,5 +1,9 @@
 package sort
 
+import (
+	"github.com/djonathanb/ppgcomp-algorithms-ds/utils"
+)
+
 // SelectionSort sort itens bringing the minimum value for given position
 func SelectionSort(v []int) {
 	for i := 0; i < len(v)-1; i++ {
@@ -9,6 +13,6 @@ func SelectionSort(v []int) {
 				lowIndex = j
 			}
 		}
-		swap(v, lowIndex, i)
+		utils.Swap(v, lowIndex, i)
 	}
 }

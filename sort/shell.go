@@ -1,9 +1,13 @@
 package sort
 
+import (
+	"github.com/djonathanb/ppgcomp-algorithms-ds/utils"
+)
+
 func incrInsertionSort(v []int, n int, incr int) {
 	for i := incr; i < n; i += incr {
 		for j := i; (j >= incr) && (v[j] < v[j-incr]); j -= incr {
-			swap(v, j, j-incr)
+			utils.Swap(v, j, j-incr)
 		}
 	}
 }

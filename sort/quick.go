@@ -1,15 +1,19 @@
 package sort
 
+import (
+	"github.com/djonathanb/ppgcomp-algorithms-ds/utils"
+)
+
 func quickSort(v []int, i int, j int) {
 	if j <= i {
 		return
 	}
 
 	pivotIndex := findPivot(i, j)
-	swap(v, pivotIndex, j)
+	utils.Swap(v, pivotIndex, j)
 
 	k := partition(v, i-1, j, v[j])
-	swap(v, k, j)
+	utils.Swap(v, k, j)
 
 	quickSort(v, i, k-1)
 	quickSort(v, k+1, j)
@@ -28,7 +32,7 @@ func partition(v []int, l int, r int, pivot int) int {
 			r--
 		}
 
-		swap(v, l, r)
+		utils.Swap(v, l, r)
 	}
 
 	return r

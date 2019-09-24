@@ -1,5 +1,9 @@
 package ds
 
+import (
+	"github.com/djonathanb/ppgcomp-algorithms-ds/utils"
+)
+
 // Heap Max Heap data structure implementantion
 type Heap struct {
 	v    []int
@@ -15,10 +19,18 @@ func New(length int) Heap {
 }
 
 // Insert insert a new value to the Heap
-func (h Heap) Insert() {
-	// current := h.size
+func (h *Heap) Insert(n int) {
+	cur := h.size
+	par := h.Parent(cur)
+
+	h.v[cur] = n
 	h.size++
 
+	for cur > 0 && h.v[cur] > h.v[par] {
+		utils.Swap(h.v, cur, par)
+		cur = par
+		par = h.Parent(cur)
+	}
 }
 
 // Parent return the index of parent node given a node index
