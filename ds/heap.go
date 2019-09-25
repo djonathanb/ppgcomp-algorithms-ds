@@ -10,8 +10,8 @@ type Heap struct {
 	size int
 }
 
-// New creates a new Heap given a determined size (capacity) or array
-func New(length int) Heap {
+// NewHeap creates a new Heap given a determined size (capacity) or array
+func NewHeap(length int) Heap {
 	v := make([]int, length)
 	return Heap{
 		v:    v,
@@ -19,9 +19,9 @@ func New(length int) Heap {
 	}
 }
 
-// NewFrom creates a new Heap given values
-func NewFrom(v ...int) Heap {
-	h := New(len(v))
+// NewHeapFrom creates a new Heap given values
+func NewHeapFrom(v ...int) Heap {
+	h := NewHeap(len(v))
 	for _, c := range v {
 		h.Insert(c)
 	}
