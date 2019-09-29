@@ -94,3 +94,22 @@ func TestLinkedListAbsent(t *testing.T) {
 		t.Errorf("(%v) different of (%v)", l.AsArray(), expected)
 	}
 }
+
+func TestLinkedListEach(t *testing.T) {
+	l := NewLinkedList()
+
+	l.Insert(7)
+	l.Insert(5)
+	l.Insert(3)
+	l.Insert(9)
+
+	v := make([]LinkedListNode, 4)
+	l.Each(func(i int, d LinkedListNode) {
+		v[i] = d
+	})
+
+	expected := []int{9, 3, 5, 7}
+	if utils.Different(l.AsArray(), expected) {
+		t.Errorf("(%v) different of (%v)", l.AsArray(), expected)
+	}
+}

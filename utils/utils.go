@@ -26,3 +26,18 @@ func Swap(v []int, i int, j int) {
 	v[i] = v[j]
 	v[j] = copy
 }
+
+// Max return the index of the max element of the array
+func Max(v []int) int {
+	if len(v) == 0 {
+		return -1
+	}
+
+	max := 0
+	for i := 0; i < len(v); i++ {
+		if v[i] > v[max] {
+			max = i
+		}
+	}
+	return max
+}
