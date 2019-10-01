@@ -6,18 +6,18 @@ type LinkedListNode struct {
 	next *LinkedListNode
 }
 
-// LinkedList list of nodes
-type LinkedList struct {
-	head  *LinkedListNode
-	count int
-}
-
 // NewLinkedListNode creates a new Node storing data
 func NewLinkedListNode(data int) LinkedListNode {
 	return LinkedListNode{
 		data: data,
 		next: nil,
 	}
+}
+
+// LinkedList list of nodes
+type LinkedList struct {
+	head  *LinkedListNode
+	count int
 }
 
 // NewLinkedList creates a new empty Liskend List
