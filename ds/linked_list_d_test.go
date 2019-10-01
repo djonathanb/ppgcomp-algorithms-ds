@@ -18,12 +18,12 @@ func TestDoublyLinkedListInsert(t *testing.T) {
 		t.Errorf("(%v) different from (%v)", l.AsArray(), expected)
 	}
 
-	if l.first.data != 7 {
-		t.Errorf("wrong start (%v)", l.first.data)
+	if l.first.Data != 7 {
+		t.Errorf("wrong start (%v)", l.first.Data)
 	}
 
-	if l.last.data != 3 {
-		t.Errorf("wrong end (%v)", l.last.data)
+	if l.last.Data != 3 {
+		t.Errorf("wrong end (%v)", l.last.Data)
 	}
 }
 
@@ -35,18 +35,18 @@ func TestDoublyLinkedListSearch(t *testing.T) {
 	l.Insert(3)
 
 	n := l.Search(7)
-	if n.data != 7 {
-		t.Errorf("node (%d) different of (7)", n.data)
+	if n.Data != 7 {
+		t.Errorf("node (%d) different of (7)", n.Data)
 	}
 
 	n = l.Search(5)
-	if n.data != 5 {
-		t.Errorf("node (%d) different of (5)", n.data)
+	if n.Data != 5 {
+		t.Errorf("node (%d) different of (5)", n.Data)
 	}
 
 	n = l.Search(3)
-	if n.data != 3 {
-		t.Errorf("node (%d) different of (3)", n.data)
+	if n.Data != 3 {
+		t.Errorf("node (%d) different of (3)", n.Data)
 	}
 }
 
@@ -72,13 +72,13 @@ func TestDoublyLinkedListRemove(t *testing.T) {
 
 	l.Remove(7)
 	expected := []int{5, 3}
-	if utils.Different(l.AsArray(), expected) || l.first.data != 5 {
+	if utils.Different(l.AsArray(), expected) || l.first.Data != 5 {
 		t.Errorf("node (7) not removed correctly")
 	}
 
 	l.Remove(3)
 	expected = []int{5}
-	if utils.Different(l.AsArray(), expected) || l.last.data != 5 {
+	if utils.Different(l.AsArray(), expected) || l.last.Data != 5 {
 		t.Errorf("node (3) not removed correctly")
 	}
 

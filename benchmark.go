@@ -31,13 +31,6 @@ func test(original []int, fn func([]int), name string) {
 	fmt.Printf("%s took %v\n", name, time.Since(start))
 }
 
-func testReturning(original []int, fn func([]int) []int, name string) {
-	cp := cpArray(original)
-	start := time.Now()
-	fn(cp)
-	fmt.Printf("%s took %v\n", name, time.Since(start))
-}
-
 func main() {
 	original := createArray(50000)
 
@@ -47,5 +40,6 @@ func main() {
 	test(original, sort.ShellSort, "shell")
 	test(original, sort.MergeSort, "merge")
 	test(original, sort.QuickSort, "quick")
-	testReturning(original, sort.HeapSort, "heap")
+	test(original, func(v []int) { sort.HeapSort(v) }, "heap")
+	test(original, func(v []int) { sort.BucketSort(v) }, "bucket")
 }

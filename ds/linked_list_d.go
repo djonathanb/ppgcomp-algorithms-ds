@@ -1,8 +1,10 @@
 package ds
 
+import "fmt"
+
 // DoublyLinkedListNode stores data
 type DoublyLinkedListNode struct {
-	data int
+	Data int
 	next *DoublyLinkedListNode
 	prev *DoublyLinkedListNode
 }
@@ -10,7 +12,7 @@ type DoublyLinkedListNode struct {
 // NewDoublyLinkedListNode creates a new Node storing data
 func NewDoublyLinkedListNode(data int) DoublyLinkedListNode {
 	return DoublyLinkedListNode{
-		data: data,
+		Data: data,
 		next: nil,
 		prev: nil,
 	}
@@ -51,8 +53,7 @@ func (l *DoublyLinkedList) Insert(data int) {
 // Each executes func for each (index, node) in the list
 func (l DoublyLinkedList) Each(fn func(int, DoublyLinkedListNode)) {
 	i := 0
-	node := l.first
-	for node != nil {
+	for node := l.first; node != nil; {
 		fn(i, *node)
 		node = node.next
 	}
@@ -61,7 +62,7 @@ func (l DoublyLinkedList) Each(fn func(int, DoublyLinkedListNode)) {
 // Search return a node given your key
 func (l *DoublyLinkedList) Search(data int) *DoublyLinkedListNode {
 	current := l.first
-	for current != nil && current.data != data {
+	for current != nil && current.Data != data {
 		current = current.next
 	}
 	return current
@@ -98,11 +99,16 @@ func (l *DoublyLinkedList) Remove(data int) {
 // Sort insert sort the list
 func (l *DoublyLinkedList) Sort() {
 	if l.count > 1 {
-		current := l.first.next
-		next := current.next
-		for current != nil {
+		for current, next := l.first, l.first.next; next != nil; {
+			current = next
+			if current != nil {
+				next = current.next
+			} else {
+				next = nil
+			}
+
 			node := current
-			for node.prev != nil && node.data < node.prev.data {
+			for node.prev != nil && node.Data < node.prev.Data {
 				prev := node.prev
 
 				if node.next != nil {
@@ -127,13 +133,6 @@ func (l *DoublyLinkedList) Sort() {
 					l.last = prev
 				}
 			}
-
-			current = next
-			if current != nil {
-				next = current.next
-			} else {
-				next = nil
-			}
 		}
 	}
 }
@@ -144,10 +143,19 @@ func (l DoublyLinkedList) AsArray() []int {
 	current := l.first
 	i := 0
 	for current != nil {
-		v[i] = current.data
+		v[i] = current.Data
 		i++
 		current = current.next
 	}
 
 	return v
+}
+
+// Print prints list structure
+func (l DoublyLinkedList) Print(prefix string) {
+	fmt.Printf("[%s]", prefix)
+	l.Each(func(_ int, node DoublyLinkedListNode) {
+		print(" --> ", node.Data)
+	})
+	println()
 }
