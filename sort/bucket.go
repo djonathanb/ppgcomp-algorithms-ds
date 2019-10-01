@@ -22,9 +22,7 @@ func BucketSortP(v []int, buckets int, maxRange int) {
 	i := 0
 	for j := 0; j < buckets; j++ {
 		list := b[j]
-		// list.Print(strconv.Itoa(j) + "U")
 		list.Sort()
-		// list.Print(strconv.Itoa(j) + "S")
 		list.Each(func(_ int, node ds.DoublyLinkedListNode) {
 			v[i] = node.Data
 			i++

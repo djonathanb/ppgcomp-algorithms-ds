@@ -116,7 +116,7 @@ func (l *DoublyLinkedList) Sort() {
 				}
 
 				if prev.prev != nil {
-					prev.prev.next = next
+					prev.prev.next = node
 				}
 
 				prev.next = node.next

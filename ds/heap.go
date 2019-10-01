@@ -22,9 +22,8 @@ func NewHeap(length int) Heap {
 // NewHeapFrom creates a new Heap given values
 func NewHeapFrom(v ...int) Heap {
 	h := NewHeap(len(v))
-	for _, c := range v {
-		h.Insert(c)
-	}
+	h.v = v
+	h.size = len(v)
 	return h
 }
 
