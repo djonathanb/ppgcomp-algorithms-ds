@@ -40,6 +40,6 @@ func main() {
 	test(original, sort.ShellSort, "shell")
 	test(original, sort.MergeSort, "merge")
 	test(original, sort.QuickSort, "quick")
+	test(original, sort.BucketSort, "bucket")
 	test(original, func(v []int) { sort.HeapSort(v) }, "heap")
-	test(original, func(v []int) { sort.BucketSort(v) }, "bucket")
 }

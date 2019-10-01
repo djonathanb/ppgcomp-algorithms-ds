@@ -46,26 +46,6 @@ func (l LinkedList) Each(fn func(int, LinkedListNode)) {
 	}
 }
 
-// // Sort insert sort the list
-// func (l *LinkedList) Sort(data int) {
-// 	node := NewLinkedListNode(data)
-
-// 	var prev *LinkedListNode = nil
-// 	var n *LinkedListNode = l.head
-// 	for n != nil && n.data < data {
-// 		prev = n
-// 		n = n.next
-// 	}
-
-// 	if prev == nil {
-// 		l.Insert(data)
-// 	} else {
-// 		node.next = prev.next
-// 		prev.next = &node
-// 		l.count++
-// 	}
-// }
-
 // Search return a node given your key
 func (l *LinkedList) Search(data int) *LinkedListNode {
 	current := l.head
