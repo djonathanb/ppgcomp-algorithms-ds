@@ -9,9 +9,9 @@ import (
 func TestLinkedListInsert(t *testing.T) {
 	l := NewLinkedList()
 
-	l.Insert(7)
-	l.Insert(5)
-	l.Insert(3)
+	l.Insert(7, 7)
+	l.Insert(5, 5)
+	l.Insert(3, 3)
 
 	expected := []int{3, 5, 7}
 	if utils.Different(l.AsArray(), expected) {
@@ -22,22 +22,22 @@ func TestLinkedListInsert(t *testing.T) {
 func TestLinkedListSearch(t *testing.T) {
 	l := NewLinkedList()
 
-	l.Insert(7)
-	l.Insert(5)
-	l.Insert(3)
+	l.Insert(7, "7")
+	l.Insert(5, "5")
+	l.Insert(3, "3")
 
 	n := l.Search(7)
-	if n.data != 7 {
+	if n.data != "7" {
 		t.Errorf("node (%d) different of (7)", n.data)
 	}
 
 	n = l.Search(5)
-	if n.data != 5 {
+	if n.data != "5" {
 		t.Errorf("node (%d) different of (5)", n.data)
 	}
 
 	n = l.Search(3)
-	if n.data != 3 {
+	if n.data != "3" {
 		t.Errorf("node (%d) different of (3)", n.data)
 	}
 }
@@ -45,9 +45,9 @@ func TestLinkedListSearch(t *testing.T) {
 func TestLinkedListSearchAbsent(t *testing.T) {
 	l := NewLinkedList()
 
-	l.Insert(7)
-	l.Insert(5)
-	l.Insert(3)
+	l.Insert(7, "7")
+	l.Insert(5, "5")
+	l.Insert(3, "3")
 
 	n := l.Search(9)
 	if n != nil {
@@ -58,9 +58,9 @@ func TestLinkedListSearchAbsent(t *testing.T) {
 func TestLinkedListRemove(t *testing.T) {
 	l := NewLinkedList()
 
-	l.Insert(7)
-	l.Insert(5)
-	l.Insert(3)
+	l.Insert(7, "7")
+	l.Insert(5, "5")
+	l.Insert(3, "3")
 
 	l.Remove(7)
 	expected := []int{3, 5}
@@ -83,9 +83,9 @@ func TestLinkedListRemove(t *testing.T) {
 func TestLinkedListAbsent(t *testing.T) {
 	l := NewLinkedList()
 
-	l.Insert(7)
-	l.Insert(5)
-	l.Insert(3)
+	l.Insert(7, "7")
+	l.Insert(5, "5")
+	l.Insert(3, "3")
 
 	l.Remove(9)
 
@@ -98,10 +98,10 @@ func TestLinkedListAbsent(t *testing.T) {
 func TestLinkedListEach(t *testing.T) {
 	l := NewLinkedList()
 
-	l.Insert(7)
-	l.Insert(5)
-	l.Insert(3)
-	l.Insert(9)
+	l.Insert(7, "7")
+	l.Insert(5, "5")
+	l.Insert(3, "3")
+	l.Insert(9, "9")
 
 	v := make([]LinkedListNode, 4)
 	l.Each(func(i int, d LinkedListNode) {

@@ -6,25 +6,66 @@ import (
 
 // Heap Max Heap data structure implementantion
 type Heap struct {
-	v    []int
-	size int
+	v         []int
+	size      int
+	isMaxHeap bool
+	compare   func([]int, int, int) bool
 }
 
-// NewHeap creates a new Heap given a determined size (capacity) or array
-func NewHeap(length int) Heap {
+// newHeap creates a new Heap given a determined size (capacity) or array and type (min/max)
+func newHeap(length int, isMaxHeap bool) Heap {
 	v := make([]int, length)
+
+	var fn func([]int, int, int) bool
+	if isMaxHeap {
+		fn = func(v []int, i int, j int) bool {
+			return v[i] > v[j]
+		}
+	} else {
+		fn = func(v []int, i int, j int) bool {
+			return v[i] < v[j]
+		}
+	}
+
 	return Heap{
-		v:    v,
-		size: 0,
+		v:         v,
+		size:      0,
+		isMaxHeap: isMaxHeap,
+		compare:   fn,
 	}
 }
 
-// NewHeapFrom creates a new Heap given values
-func NewHeapFrom(v ...int) Heap {
-	h := NewHeap(len(v))
+// newHeapFrom creates a new Heap given values
+func newHeapFrom(isMaxHeap bool, v []int) Heap {
+	h := newHeap(len(v), isMaxHeap)
 	h.v = v
 	h.size = len(v)
 	return h
+}
+
+// NewMaxHeapFrom creates a new Heap given values
+func NewMaxHeapFrom(v ...int) Heap {
+	return newHeapFrom(true, v)
+}
+
+// NewMinHeapFrom creates a new Heap given values
+func NewMinHeapFrom(v ...int) Heap {
+	return newHeapFrom(false, v)
+}
+
+// NewMaxHeap creates a max heap
+func NewMaxHeap(length int) Heap {
+	return newHeap(length, true)
+}
+
+// NewMinHeap creates a min heap
+func NewMinHeap(length int) Heap {
+	return newHeap(length, false)
+}
+
+// Len returns the lenght of the heap
+func (h *Heap) Len() int {
+	return h.size
 }
 
 // Insert insert a new value (n) to the Heap
@@ -35,7 +76,7 @@ func (h *Heap) Insert(n int) {
 	h.v[cur] = n
 	h.size++
 
-	for cur > 0 && h.v[cur] > h.v[par] {
+	for cur > 0 && h.compare(h.v, cur, par) {
 		utils.Swap(h.v, cur, par)
 		cur = par
 		par = h.Parent(cur)
@@ -62,55 +103,63 @@ func (h Heap) Right(index int) int {
 	return (index + 1) * 2
 }
 
-// GetMax return the max value (first) from heap
-func (h Heap) GetMax() int {
+// GetTop return the top value from heap
+func (h Heap) GetTop() int {
 	return h.v[0]
 }
 
-func (h Heap) maxHeapify(index int) {
+func (h Heap) heapify(index int) {
 	l := h.Left(index)
 	r := h.Right(index)
-	maior := index
+	selected := index
 
-	if l <= h.size-1 && h.v[l] > h.v[index] {
-		maior = l
+	if l <= h.size-1 && h.compare(h.v, l, index) {
+		selected = l
 	}
 
-	if r <= h.size-1 && h.v[r] > h.v[maior] {
-		maior = r
+	if r <= h.size-1 && h.compare(h.v, r, selected) {
+		selected = r
 	}
 
-	if maior != index {
-		utils.Swap(h.v, index, maior)
-		h.maxHeapify(maior)
+	if selected != index {
+		utils.Swap(h.v, index, selected)
+		h.heapify(selected)
 	}
 }
 
-// RemoveMax return and remove the max value from the heap and guarantee props
-func (h *Heap) RemoveMax() int {
+// RemoveTop return and remove the top value from the heap and guarantee props
+func (h *Heap) RemoveTop() int {
 	c := h.v[0]
 	h.v[0] = h.v[h.size-1]
 	h.size--
-	h.maxHeapify(0)
+	h.heapify(0)
 	return c
 }
 
-// BuildMaxHeap organizes a messy heap
-func (h *Heap) BuildMaxHeap() {
+// BuildHeap organizes a messy heap
+func (h *Heap) BuildHeap() {
 	size := h.size - 1
 	for i := size / 2; i >= 0; i-- {
-		h.maxHeapify(i)
+		h.heapify(i)
 	}
 }
 
-// HeapSort sort the heap and return a slice of it
+// HeapSort sort the max heap and return a slice of it
 func (h *Heap) HeapSort() []int {
-	h.BuildMaxHeap()
+	h.BuildHeap()
 	s := h.size
-	for i := h.size - 1; i > 0; i-- {
-		utils.Swap(h.v, 0, i)
-		h.size--
-		h.maxHeapify(0)
+	if h.isMaxHeap {
+		for i := h.size - 1; i > 0; i-- {
+			utils.Swap(h.v, 0, i)
+			h.size--
+			h.heapify(0)
+		}
+	} else {
+		for i := 0; i < h.size-1; i++ {
+			utils.Swap(h.v, 0, i)
+			h.size--
+			h.heapify(0)
+		}
 	}
 	return h.v[:s]
 }

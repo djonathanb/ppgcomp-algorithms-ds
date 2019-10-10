@@ -39,3 +39,18 @@ func (q *Queue) Dequeue() (int, error) {
 	}
 	return -1, errors.New("empty queue")
 }
+
+// AsArray return itens as array
+func (q *Queue) AsArray() []int {
+	v := make([]int, q.count)
+
+	c := q.out
+	i := 0
+	for i < q.count {
+		v[i] = q.vet[c]
+		c = (c + 1) % len(q.vet)
+		i++
+	}
+
+	return v
+}

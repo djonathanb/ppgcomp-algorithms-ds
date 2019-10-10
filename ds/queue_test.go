@@ -106,3 +106,24 @@ func TestQueueDequeue(t *testing.T) {
 		t.Errorf("%v different from %d", q.vet, expected)
 	}
 }
+
+func TestQueueAsArray(t *testing.T) {
+	q := NewQueue(8)
+	q.Enqueue(7)
+	q.Enqueue(9)
+	q.Enqueue(3)
+	q.Dequeue()
+	q.Dequeue()
+	q.Enqueue(11)
+	q.Enqueue(13)
+	q.Enqueue(15)
+	q.Enqueue(1)
+	q.Enqueue(2)
+	q.Enqueue(4)
+
+	v := q.AsArray()
+	expected := []int{3, 11, 13, 15, 1, 2, 4}
+	if utils.Different(v, expected) {
+		t.Errorf("%v different from %d", v, expected)
+	}
+}

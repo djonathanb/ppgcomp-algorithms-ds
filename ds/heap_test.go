@@ -8,7 +8,7 @@ import (
 
 func TestHeapCreation(t *testing.T) {
 	length := 10
-	h := NewHeap(length)
+	h := NewMaxHeap(length)
 
 	if len(h.v) != length {
 		t.Errorf("vector length (%d) different from (%d)", len(h.v), length)
@@ -20,27 +20,27 @@ func TestHeapCreation(t *testing.T) {
 }
 
 func TestHeapGetMax(t *testing.T) {
-	h := NewHeap(10)
+	h := NewMaxHeap(10)
 	h.Insert(16)
 	h.Insert(14)
 	h.Insert(10)
 
-	if h.GetMax() != 16 {
-		t.Errorf("%v different from %v", h.GetMax(), 16)
+	if h.GetTop() != 16 {
+		t.Errorf("%v different from %v", h.GetTop(), 16)
 	}
 
-	h = NewHeap(10)
+	h = NewMaxHeap(10)
 	h.Insert(1)
 	h.Insert(2)
 	h.Insert(3)
 
-	if h.GetMax() != 3 {
-		t.Errorf("%v different from %v", h.GetMax(), 3)
+	if h.GetTop() != 3 {
+		t.Errorf("%v different from %v", h.GetTop(), 3)
 	}
 }
 
 func TestHeapParent(t *testing.T) {
-	h := NewHeap(10)
+	h := NewMaxHeap(10)
 	parentTest(h, 1, 0, t)
 	parentTest(h, 2, 0, t)
 	parentTest(h, 3, 1, t)
@@ -60,7 +60,7 @@ func parentTest(h Heap, index int, expected int, t *testing.T) {
 }
 
 func TestHeapLeft(t *testing.T) {
-	h := NewHeap(10)
+	h := NewMaxHeap(10)
 	leftTest(h, 0, 1, t)
 	leftTest(h, 1, 3, t)
 	leftTest(h, 2, 5, t)
@@ -76,7 +76,7 @@ func leftTest(h Heap, index int, expected int, t *testing.T) {
 }
 
 func TestHeapRight(t *testing.T) {
-	h := NewHeap(10)
+	h := NewMaxHeap(10)
 	rightTest(h, 0, 2, t)
 	rightTest(h, 1, 4, t)
 	rightTest(h, 2, 6, t)
@@ -91,7 +91,7 @@ func rightTest(h Heap, index int, expected int, t *testing.T) {
 }
 
 func TestHeapInsertOrdered(t *testing.T) {
-	h := NewHeap(10)
+	h := NewMaxHeap(10)
 	h.Insert(16)
 	h.Insert(14)
 	h.Insert(10)
@@ -110,7 +110,7 @@ func TestHeapInsertOrdered(t *testing.T) {
 }
 
 func TestHeapInsertUnordered(t *testing.T) {
-	h := NewHeap(10)
+	h := NewMaxHeap(10)
 	h.Insert(12)
 	h.Insert(8)
 	h.Insert(3)
@@ -129,10 +129,10 @@ func TestHeapInsertUnordered(t *testing.T) {
 }
 
 func TestHeapRemoveMax(t *testing.T) {
-	h := NewHeapFrom(16, 14, 10, 8, 7, 9, 3, 2, 4, 1)
+	h := NewMaxHeapFrom(16, 14, 10, 8, 7, 9, 3, 2, 4, 1)
 
 	// First removal
-	max := h.RemoveMax()
+	max := h.RemoveTop()
 
 	if max != 16 {
 		t.Errorf("%v different from %v", max, 16)
@@ -145,7 +145,7 @@ func TestHeapRemoveMax(t *testing.T) {
 	}
 
 	// Second removal
-	max = h.RemoveMax()
+	max = h.RemoveTop()
 
 	if max != 14 {
 		t.Errorf("%v different from %v", max, 14)
@@ -158,12 +158,12 @@ func TestHeapRemoveMax(t *testing.T) {
 	}
 }
 
-func TestHeapBuildMaxHeap(t *testing.T) {
-	h := NewHeap(10)
+func TestHeapBuildHeap(t *testing.T) {
+	h := NewMaxHeap(10)
 	h.v = []int{4, 1, 3, 2, 16, 9, 10, 14, 8, 7}
 	h.size = 10
 
-	h.BuildMaxHeap()
+	h.BuildHeap()
 
 	expected := []int{16, 14, 10, 8, 7, 9, 3, 2, 4, 1}
 	if utils.Different(h.v, expected) {
@@ -172,7 +172,7 @@ func TestHeapBuildMaxHeap(t *testing.T) {
 }
 
 func TestHeapSort(t *testing.T) {
-	h := NewHeapFrom(16, 14, 10, 8, 7, 9, 3, 2, 4, 1)
+	h := NewMaxHeapFrom(16, 14, 10, 8, 7, 9, 3, 2, 4, 1)
 	v := h.HeapSort()
 
 	expected := []int{1, 2, 3, 4, 7, 8, 9, 10, 14, 16}

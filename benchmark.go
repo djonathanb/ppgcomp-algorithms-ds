@@ -50,7 +50,7 @@ func test(original []int, fn func([]int), name string) {
 }
 
 func main() {
-	original := createArray(100000)
+	original := createArray(50000)
 
 	test(original, sort.BubbleSort, "bubble")
 	test(original, sort.SelectionSort, "selection")
